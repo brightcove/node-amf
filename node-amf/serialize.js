@@ -229,11 +229,13 @@ AMFSerializer.prototype.writeObject = function( value ){
 	// flag with instance, no traits, no externalizable
 	this.writeU29( 11 );
 	// Override object type if present
-	if(value['type'] != null) {
-		this.writeUTF8(value['type']);
-	} else {
-		this.writeUTF8('Object');
-	}
+	if(value['serialize_amf_type'] != null) {
+    	  this.writeUTF8(value['serialize_amf_type']);
+  	} else if(value['type'] != null) {
+    	  this.writeUTF8(value['type']);
+  	} else {
+    	  this.writeUTF8('Object');
+  	}	
 	// write serializable properties
 	for( var s in value ){
 		if( typeof value[s] !== 'function' ){
