@@ -337,6 +337,11 @@ AMFDeserializer.prototype.readObject = function( version ){
 		}
 		// adding type to JSON object so we can remember it and pass back to server
 		if( Traits.clss){
+			// https://github.com/brightcove/node-amf/issues/6
+			// If an existing type property exists, `deserialize` clobbers it.
+			if (Obj["type"]) {
+				Obj["type_before_amf_deserialize"] = Obj["type"];
+			}
 			Obj["type"] = Traits.clss;
 		}
 
